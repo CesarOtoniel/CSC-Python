@@ -1,0 +1,72 @@
+"""
+Program: lightyear.py
+Author: Cesar Guevara
+Problem:Write a script that inputs a line of plaintext 
+and a distance value and outputs an encrypted text using 
+a Caesar cipher. The script should work for any printable
+characters.
+
+1. Significant contants:
+
+	none
+
+2. The inputs are:
+
+	plainText #Text to be encoded 
+	
+	distance  #distance beetween the value of 
+		  #ord() of the encrypted and 
+		  #unencrypted letter 
+
+3. Computations:
+
+	cipherValue #new ord() value in ciphered character
+
+4. The outputs are:
+	code        #string with all the ciphered values
+"""
+
+# Initialize the constants
+
+# Request inputs
+plainText = input("Enter a message: ")
+distance = int(input("Enter the distance value: "))
+code = ""
+file_name = input("Enter the file name: ")
+distance = 1  # As per the second snippet, this could be prompted for user input if variability is desired
+code = ""
+# Open and read from the file
+with open(file_name, 'r') as file:
+    plainText = file.read()
+
+# Computations adapted from your snippets
+for ch in plainText:
+    ordValue = ord(ch)
+    # Adjusting ordValue by distance and handling overflow
+    cipherValue = ordValue + distance
+    if cipherValue > 127:
+        cipherValue = distance - (127 - ordValue + 1)
+
+    # Convert to binary, ensuring it's a 7-bit string since ASCII is 7 bits and we are not going over 127
+    bitString = bin(cipherValue)[2:].zfill(7)
+
+    # Perform the "left shift" operation
+    shifts = 1  # Left shift by 1
+    if len(bitString) >= shifts:
+        shifts = shifts % len(bitString)
+    output = ""
+    for i in range(len(bitString)):
+        if(i < len(bitString) - shifts):
+            output = output + bitString[i + shifts]
+    for i in range(shifts):
+        output = output + bitString[i]
+
+    # Concatenate to the code string, separating binary strings with a space
+    code += output + ' '
+
+# Remove the trailing space
+code = code.rstrip()
+
+# Write results to a file
+with open("Encrypted.txt", 'w') as outputFile:
+    outputFile.write(code)

@@ -1,0 +1,26 @@
+(Game starts);
+Game loads prior counter;
+userinput:
+Game picks a rock paper or scissors; //Based on prior attempts, if the scores are tied then it selects at random.
+User input;
+if(User inputs a valid option){
+  if(Did user input 'Q' or 'q'){ goto exit }
+  else {
+    Add state of game to counter; //lookup table with all posible results
+    if(Player wins?)
+    {
+      YOU WIN!;
+    }
+    else{
+      YOU LOSE!;
+    }
+    
+    goto userinput
+  }
+}
+
+else{goto userinput }
+exit:
+Write counter to file;
+Display current counter to user;
+exit;
